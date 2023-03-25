@@ -1,4 +1,220 @@
-body{
-    margin: 0;
-    font-family: sans-serif;
+/* Reset some default styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply a global font family */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Define a container for the page */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Style the navbar */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+nav h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+nav ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  margin-left: 20px;
+}
+
+nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Style the title anchor tag */
+nav .title {
+  background-color: transparent !important;
+  color: #333 !important;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+nav a:not(.title):hover {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Style the main content area */
+main {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+main h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+main p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Apply responsive design to the container */
+@media (max-width: 768px) {
+  .container {
+      padding: 0 10px;
+  }
+
+  nav h1 {
+      font-size: 24px;
+  }
+
+  nav a {
+      font-size: 14px;
+      padding: 8px;
+  }
+
+  main h2 {
+      font-size: 20px;
+  }
+
+  main p {
+      font-size: 14px;
+  }
+}
+
+/* Style the poll list */
+.poll-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.poll-item {
+  background-color: #f8f8f8;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.poll-item h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.poll-item p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.poll-item .option-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.poll-item .option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.poll-item .option-item .option-label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.poll-item .option-item .option-count {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+/* Style the form container */
+.form-container {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Style the form groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Style the form labels */
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Style the form inputs and textareas */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Style the submit button */
+.btn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #555;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+}
+
+.poll-chart {
+  margin-top: 10px;
+}
+
+.poll-bar {
+  height: 10px;
+  margin-bottom: 5px;
 }

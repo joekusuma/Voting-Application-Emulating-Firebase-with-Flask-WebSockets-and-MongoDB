@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="page-title">View Polls</h2>
+    {% if polls %}
+        <ul class="poll-list">
+            {% for poll in polls %}
+                <li class="poll-item">
+                    <h3 class="poll-title">{{ poll.title }}</h3>
+                    <p class="poll-description">{{ poll.description }}</p>
+                    <ul class="poll-options">
+                        {% for option in poll.options %}
+                            <li class="poll-option">{{ option }}: <span class="poll-votes">{{ poll.votes[loop.index0] }}</span></li>
+                        {% endfor %}
+                    </ul>
+                    <div class="poll-chart">
+                        {% for vote in poll.votes %}
+                            <div class="poll-bar" style="width: {{ vote*10 }}%; background-color: {{ loop.cycle('#007bff', '#dc3545', '#ffc107', '#28a745') }}"></div>
+                        {% endfor %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no polls to display.</p>
+    {% endif %}
+{% endblock %}

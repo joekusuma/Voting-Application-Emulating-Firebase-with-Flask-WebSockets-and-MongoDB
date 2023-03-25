@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Everybody Votes{% endblock %}
+
+{% block content %}
+<main>
+    <h2>Login to Everybody Votes</h2>
+    <div class="form-container">
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</main>
+{% endblock %}
