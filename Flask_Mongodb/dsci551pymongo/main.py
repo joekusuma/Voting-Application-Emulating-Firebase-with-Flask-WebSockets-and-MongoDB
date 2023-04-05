@@ -117,7 +117,21 @@ def vote(poll_id):
 def login():
     return render_template("login.html")
 
-
+@main.route('/create-account', methods=['GET', 'POST'])
+def create_account():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if not username or not password:
+            flash('Please provide both a username and password')
+            return redirect(url_for('create_account'))
+        if db.users.find_one({'username': username}):
+            flash('Username already exists')
+            return redirect(url_for('create_account'))
+        db.users.insert_one({'username': username, 'password': password})
+        flash('Account created successfully')
+        return redirect(url_for('login'))
+    return render_template('create_account.html')
 app = Flask(__name__)
 app.register_blueprint(main)
 
