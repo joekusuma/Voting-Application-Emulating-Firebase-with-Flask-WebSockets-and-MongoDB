@@ -97,9 +97,20 @@ def view_polls():
 
 
 # @main.route("/vote")
-# def vote():
+@main.route("/vote/<int:poll_id>", methods=["GET", "POST"])
+def vote(poll_id):
+    poll_collection = dsci551db.dsci551.polls
+    poll = poll_collection.find_one({"id": poll_id})
+    
+    if request.method == "POST":
+        selected_option = request.form["option"]
+        poll["options"].append(selected_option)
+        poll["votes"].append(1)
+        poll_collection.update_one({"id": poll_id}, {"$set": poll})
+        return redirect(url_for("main.view_polls"))
+    
+    return render_template("vote.html", poll=poll)
 
-#     return render_template("vote.html", polls=polls)
 
 
 @main.route("/login")
