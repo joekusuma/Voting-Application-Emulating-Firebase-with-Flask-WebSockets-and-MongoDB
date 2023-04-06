@@ -73,43 +73,39 @@ def create_poll():
         title = request.form["title"]
         description = request.form["description"]
         options = request.form["options"]
-        # votes = request.form["votes"]
-        new_poll.append(
-            {
-                "title": title,
-                "description": description,
-                "options": list(options.split(",")),
-                # "votes": votes,
-            }
-        )
         poll_collection = dsci551db.dsci551.polls
-        poll_collection.insert_many(new_poll)
+        poll = {
+            "title": title,
+            "description": description,
+            "options": options.splitlines(),
+            "votes": [],
+        }
+        poll_collection.insert_one(poll)
         return redirect(url_for("main.view_polls"))
     return render_template("create_poll.html")
+
 
 
 @main.route("/view-polls")
 def view_polls():
     poll_collection = dsci551db.dsci551.polls
+    polls = []
     for x in poll_collection.find():
-        new_poll.append(x)
-    return render_template("view_polls.html", polls=new_poll)
+        polls.append(x)
+    return render_template("view_polls.html", polls=polls)
 
-
-# @main.route("/vote")
-@main.route("/vote/<int:poll_id>", methods=["GET", "POST"])
+@main.route("/vote/<int:poll_id>", methods=["POST"])
 def vote(poll_id):
     poll_collection = dsci551db.dsci551.polls
     poll = poll_collection.find_one({"id": poll_id})
     
-    if request.method == "POST":
-        selected_option = request.form["option"]
-        poll["options"].append(selected_option)
-        poll["votes"].append(1)
-        poll_collection.update_one({"id": poll_id}, {"$set": poll})
-        return redirect(url_for("main.view_polls"))
+    selected_option = request.form["option"]
+    option_index = poll["options"].index(selected_option)
+    poll["votes"][option_index] += 1
+    poll_collection.update_one({"id": poll_id}, {"$set": poll})
     
-    return render_template("vote.html", poll=poll)
+    return redirect(url_for("main.view_polls"))
+
 
 
 
@@ -119,7 +115,12 @@ def login():
 
 @main.route('/create-account', methods=['GET', 'POST'])
 def create_account():
-    if request.method == 'POST':
+    if request.method == 'GET':
+    # handle GET request
+        return render_template('create_account.html')
+
+    elif request.method == 'POST':
+        # handle POST request
         username = request.form['username']
         password = request.form['password']
         if not username or not password:
@@ -131,7 +132,10 @@ def create_account():
         db.users.insert_one({'username': username, 'password': password})
         flash('Account created successfully')
         return redirect(url_for('login'))
-    return render_template('create_account.html')
+
+    else:
+        # handle other methods
+        return 'Method not allowed'
 app = Flask(__name__)
 app.register_blueprint(main)
 
