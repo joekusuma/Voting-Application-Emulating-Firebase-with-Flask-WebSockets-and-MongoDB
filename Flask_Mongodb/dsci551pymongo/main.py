@@ -8,7 +8,7 @@ dsci551db = MongoClient(
 
 main = Blueprint("main", __name__)
 
-polls = [
+test_polls = [
     {
         "id": 1,
         "title": "What is your favorite color?",
@@ -66,13 +66,17 @@ def delete():
     # user_collection.delete_one(filter)
     return render_template("index.html")
 
+
 def get_next_id(poll_collection):
     latest_poll = poll_collection.find_one(sort=[("id", -1)])
     if latest_poll:
+        print("find last poll: ", latest_poll)
         return latest_poll["id"] + 1
     else:
+        print("no poll found")
         return 1
-    
+
+
 @main.route("/create-poll", methods=["GET", "POST"])
 def create_poll():
     if request.method == "POST":
@@ -92,61 +96,58 @@ def create_poll():
     return render_template("create_poll.html")
 
 
-
 @main.route("/view-polls")
 def view_polls():
     poll_collection = dsci551db.dsci551.polls
     polls = []
-    for index, poll in enumerate(poll_collection.find()):
-        poll['id'] = index + 1
-        polls.append(poll)
+    for x in poll_collection.find():
+        polls.append(x)
     return render_template("view_polls.html", polls=polls)
-
 
 
 @main.route("/vote/<int:poll_id>", methods=["POST"])
 def vote(poll_id):
     poll_collection = dsci551db.dsci551.polls
     poll = poll_collection.find_one({"id": poll_id})
-    
+
     selected_option = request.form["option"]
     option_index = poll["options"].index(selected_option)
     poll["votes"][option_index] += 1
     poll_collection.update_one({"id": poll_id}, {"$set": poll})
-    
+
     return redirect(url_for("main.view_polls"))
-
-
-
 
 
 @main.route("/login")
 def login():
     return render_template("login.html")
 
-@main.route('/create-account', methods=['GET', 'POST'])
-def create_account():
-    if request.method == 'GET':
-    # handle GET request
-        return render_template('create_account.html')
 
-    elif request.method == 'POST':
+@main.route("/create-account", methods=["GET", "POST"])
+def create_account():
+    if request.method == "GET":
+        # handle GET request
+        return render_template("create_account.html")
+
+    elif request.method == "POST":
         # handle POST request
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form["username"]
+        password = request.form["password"]
         if not username or not password:
-            flash('Please provide both a username and password')
-            return redirect(url_for('create_account'))
-        if db.users.find_one({'username': username}):
-            flash('Username already exists')
-            return redirect(url_for('create_account'))
-        db.users.insert_one({'username': username, 'password': password})
-        flash('Account created successfully')
-        return redirect(url_for('login'))
+            flash("Please provide both a username and password")
+            return redirect(url_for("create_account"))
+        if db.users.find_one({"username": username}):
+            flash("Username already exists")
+            return redirect(url_for("create_account"))
+        db.users.insert_one({"username": username, "password": password})
+        flash("Account created successfully")
+        return redirect(url_for("login"))
 
     else:
         # handle other methods
-        return 'Method not allowed'
+        return "Method not allowed"
+
+
 app = Flask(__name__)
 app.register_blueprint(main)
 
