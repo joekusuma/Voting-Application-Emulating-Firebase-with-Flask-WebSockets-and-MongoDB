@@ -66,7 +66,13 @@ def delete():
     # user_collection.delete_one(filter)
     return render_template("index.html")
 
-
+def get_next_id(poll_collection):
+    latest_poll = poll_collection.find_one(sort=[("id", -1)])
+    if latest_poll:
+        return latest_poll["id"] + 1
+    else:
+        return 1
+    
 @main.route("/create-poll", methods=["GET", "POST"])
 def create_poll():
     if request.method == "POST":
@@ -75,10 +81,11 @@ def create_poll():
         options = request.form["options"]
         poll_collection = dsci551db.dsci551.polls
         poll = {
+            "id": get_next_id(poll_collection),
             "title": title,
             "description": description,
             "options": options.splitlines(),
-            "votes": [],
+            "votes": [0] * len(options.splitlines()),
         }
         poll_collection.insert_one(poll)
         return redirect(url_for("main.view_polls"))
@@ -90,9 +97,12 @@ def create_poll():
 def view_polls():
     poll_collection = dsci551db.dsci551.polls
     polls = []
-    for x in poll_collection.find():
-        polls.append(x)
+    for index, poll in enumerate(poll_collection.find()):
+        poll['id'] = index + 1
+        polls.append(poll)
     return render_template("view_polls.html", polls=polls)
+
+
 
 @main.route("/vote/<int:poll_id>", methods=["POST"])
 def vote(poll_id):
@@ -105,6 +115,7 @@ def vote(poll_id):
     poll_collection.update_one({"id": poll_id}, {"$set": poll})
     
     return redirect(url_for("main.view_polls"))
+
 
 
 
