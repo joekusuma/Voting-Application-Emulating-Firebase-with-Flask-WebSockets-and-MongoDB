@@ -15,7 +15,14 @@
             <label for="options">Options (one per line)</label>
             <textarea class="form-control" id="options" name="options" rows="3" required></textarea>
         </div>
+        <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" class="form-control" id="author" name="author" required>
+        </div>
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" id="age" name="age" required>
+        </div>
         <button type="submit" class="btn btn-primary">Create Poll</button>
     </form>
-    
 {% endblock %}

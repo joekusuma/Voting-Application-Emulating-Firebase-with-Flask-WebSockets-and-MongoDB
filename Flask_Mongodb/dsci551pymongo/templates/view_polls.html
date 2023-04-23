@@ -8,6 +8,7 @@
                 <li class="poll-item">
                     <h3 class="poll-title">{{ poll.title }}</h3>
                     <p class="poll-description">{{ poll.description }}</p>
+                    <p class="poll-author">Author: {{ poll.author }}</p>
                     <form method="post" action="{{ url_for('main.vote', poll_id=poll.id) }}">
                         <ul class="poll-options">
                             {% for option in poll.options %}

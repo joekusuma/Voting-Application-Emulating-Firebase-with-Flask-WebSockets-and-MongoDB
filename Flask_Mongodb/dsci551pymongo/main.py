@@ -83,6 +83,9 @@ def create_poll():
         title = request.form["title"]
         description = request.form["description"]
         options = request.form["options"]
+        author = request.form["author"]
+        age = int(request.form["age"])
+
         poll_collection = dsci551db.dsci551.polls
         poll = {
             "id": get_next_id(poll_collection),
@@ -90,8 +93,13 @@ def create_poll():
             "description": description,
             "options": options.splitlines(),
             "votes": [0] * len(options.splitlines()),
+            "author": author,
         }
         poll_collection.insert_one(poll)
+
+        user_collection = dsci551db.dsci551.users
+        user_collection.insert_one({"name": author, "age": age})
+
         return redirect(url_for("main.view_polls"))
     return render_template("create_poll.html")
 
@@ -117,6 +125,7 @@ def vote(poll_id):
 
     return redirect(url_for("main.view_polls"))
 
+
 @main.route("/query", methods=["GET", "POST"])
 def query_database():
     if request.method == "POST":
@@ -133,9 +142,28 @@ def query_database():
 
     return render_template("query.html")
 
+
 @main.route("/login")
 def login():
     return render_template("login.html")
+
+
+@main.route("/create-user", methods=["GET", "POST"])
+def create_user():
+    if request.method == "POST":
+        name = request.form["name"]
+        age = int(request.form["age"])
+
+        if not name or not age:
+            flash("Please provide both a name and age")
+            return redirect(url_for("main.create_user"))
+
+        user_collection = dsci551db.dsci551.users
+        user_collection.insert_one({"name": name, "age": age})
+        flash("User created successfully")
+        return redirect(url_for("main.create_user"))
+
+    return render_template("create_user.html")
 
 
 @main.route("/create-account", methods=["GET", "POST"])
