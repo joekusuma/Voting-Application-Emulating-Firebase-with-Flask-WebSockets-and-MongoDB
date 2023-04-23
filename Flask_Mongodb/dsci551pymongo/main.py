@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from pymongo import MongoClient
 from flask import Blueprint, render_template
 
@@ -117,6 +117,21 @@ def vote(poll_id):
 
     return redirect(url_for("main.view_polls"))
 
+@main.route("/query", methods=["GET", "POST"])
+def query_database():
+    if request.method == "POST":
+        order_by = request.form["orderBy"]
+        limit_to_first = int(request.form["limitToFirst"])
+
+        if order_by and limit_to_first:
+            user_collection = dsci551db.dsci551.users
+            users = user_collection.find().sort(order_by).limit(limit_to_first)
+            return render_template("results.html", users=users)
+        else:
+            flash("Please provide both 'Order By' and 'Limit To First' values")
+            return redirect(url_for("main.query_database"))
+
+    return render_template("query.html")
 
 @main.route("/login")
 def login():

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="page-title">Query Database</h2>
+    <form method="POST" action="{{ url_for('main.query_database') }}">
+        <div class="form-group">
+            <label for="orderBy">Order By:</label>
+            <input type="text" id="orderBy" name="orderBy" placeholder="Enter field to order by">
+        </div>
+        <div class="form-group">
+            <label for="limitToFirst">Limit To First:</label>
+            <input type="number" id="limitToFirst" name="limitToFirst" placeholder="Enter number of results to limit">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
+
