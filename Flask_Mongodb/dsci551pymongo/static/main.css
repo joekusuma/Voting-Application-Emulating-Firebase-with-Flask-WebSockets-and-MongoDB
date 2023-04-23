@@ -107,54 +107,6 @@ main p {
   }
 }
 
-/* Style the poll list */
-.poll-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.poll-item {
-  background-color: #f8f8f8;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.poll-item h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.poll-item p {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.poll-item .option-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.poll-item .option-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.poll-item .option-item .option-label {
-  font-size: 16px;
-  margin-right: 10px;
-}
-
-.poll-item .option-item .option-count {
-  font-size: 16px;
-  font-weight: bold;
-}
-
 
 /* Style the form container */
 .form-container {
@@ -210,11 +162,77 @@ main p {
   background-color: #0069d9;
 }
 
-.poll-chart {
-  margin-top: 10px;
+/* Style the poll list */
+.poll-options {
+  list-style: none;
+  padding: 0;
+}
+
+.poll-option {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.poll-container {
+  display: flex;
+  flex-direction: column-reverse; /* Reverse the order of the flex items */
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.poll-container:hover {
+  background-color: #e0e0e0;
+}
+
+.poll-label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.poll-votes {
+  font-size: 16px;
+  font-weight: bold;
+  order: 2; /* Move the vote percentage to the bottom */
 }
 
 .poll-bar {
   height: 10px;
   margin-bottom: 5px;
+  width: var(--votes);
+  order: 1; /* Move the bar graph to the bottom */
 }
+
+.poll-options li:nth-child(4n+1) .poll-bar {
+  background-color: #007bff;
+}
+
+.poll-options li:nth-child(4n+2) .poll-bar {
+  background-color: #dc3545;
+}
+
+.poll-options li:nth-child(4n+3) .poll-bar {
+  background-color: #ffc107;
+}
+
+.poll-options li:nth-child(4n+4) .poll-bar {
+  background-color: #28a745;
+}
+
+.poll-list {
+  list-style: none;
+}
+
+.poll-item {
+  padding: 0;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
