@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint
 from pymongo import MongoClient
-from flask import Blueprint, render_template
 
 dsci551db = MongoClient(
     "mongodb+srv://dsci551:w8QBPtSfunya7Gy0@clusterdsci551.s85edni.mongodb.net/?retryWrites=true&w=majority"
@@ -8,63 +7,7 @@ dsci551db = MongoClient(
 
 main = Blueprint("main", __name__)
 
-test_polls = [
-    {
-        "id": 1,
-        "title": "What is your favorite color?",
-        "description": "Choose one of the following colors.",
-        "options": ["Red", "Green", "Blue"],
-        "votes": [3, 2, 1],
-    },
-    {
-        "id": 2,
-        "title": "What is your favorite food?",
-        "description": "Choose one of the following foods.",
-        "options": ["Pizza", "Burgers", "Tacos"],
-        "votes": [5, 3, 2],
-    },
-    {
-        "id": 3,
-        "title": "What is your favorite movie?",
-        "description": "Choose one of the following movies.",
-        "options": ["Star Wars", "The Godfather", "The Shawshank Redemption"],
-        "votes": [1, 4, 5],
-    },
-]
-
 new_poll = []
-
-
-@main.route("/")
-def index():
-    # user_collection = dsci551db.dsci551.users
-    # user_collection.insert_one({"name": "Tiger", "age": 24})
-    # user_collection.insert_one({"name": "Joe", "age": 22})
-    return render_template("index.html")
-
-
-@main.route("/find")
-def find():
-    # user_collection = dsci551db.dsci551.users
-    # user = user_collection.find_one({"name": "Tiger"})
-    return render_template("index.html", user=user)
-
-
-@main.route("/update")
-def update():
-    # user_collection = dsci551db.dsci551.users
-    # filter = {"name": "Tiger"}
-    # newvalues = {"$set": {"age": 80}}
-    # user_collection.update_one(filter, newvalues)
-    return render_template("index.html")
-
-
-@main.route("/delete")
-def delete():
-    # user_collection = dsci551db.dsci551.users
-    # filter = {"name": "Tiger"}
-    # user_collection.delete_one(filter)
-    return render_template("index.html")
 
 
 def get_next_id(poll_collection):
