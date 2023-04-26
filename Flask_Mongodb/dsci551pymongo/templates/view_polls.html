@@ -8,31 +8,22 @@
                 <div class="poll-item">
                     <h3 class="poll-title">{{ poll.title }}</h3>
                     <p class="poll-description">{{ poll.description }}</p>
-		    <p class="poll-author">Author: {{ poll.author }}</p>
+                    <p class="poll-author">Author: {{ poll.author }}</p>
                     <form method="post" action="{{ url_for('main.vote', poll_id=poll.id) }}">
                         <ul class="poll-options">
                             {% set total_votes = poll.votes|sum %}
-                            {% if total_votes > 0 %}
-                                {% for option in poll.options %}
-                                    {% set option_votes = poll.votes[loop.index0] %}
-                                    {% set percentage = (option_votes / total_votes * 100)|int %}
-                                    <li class="poll-option">
-                                        <label class="poll-container">
-                                            <input type="radio" name="option" value="{{ option }}">
-                                            <div class="poll-label">{{ option }}</div>
-                                            <div class="poll-votes">{{ percentage }}%</div>
-                                            <div class="poll-bar" style="--votes: {{ percentage }}%;"></div>
-                                        </label>
-                                    </li>
-                                {% endfor %}
-                            {% else %}
+                            {% for option in poll.options %}
+                                {% set option_votes = poll.votes[loop.index0] %}
+                                {% set percentage = 0 if total_votes == 0 else (option_votes / total_votes * 100)|int %}
                                 <li class="poll-option">
                                     <label class="poll-container">
-                                        <input type="radio" name="option" value="no-option" disabled>
-                                        <div class="poll-label">No options available yet.</div>
+                                        <input type="radio" name="option" value="{{ option }}">
+                                        <div class="poll-label">{{ option }}</div>
+                                        <div class="poll-votes">{{ percentage }}%</div>
+                                        <div class="poll-bar" style="--votes: {{ percentage }}%;"></div>
                                     </label>
                                 </li>
-                            {% endif %}
+                            {% endfor %}
                             <div class="poll-voters">Number of voters: {{ total_votes }}</div>
                             <button type="submit" class="btn btn-primary">Vote</button>
                         </ul>
