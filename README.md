@@ -41,7 +41,7 @@ The **Voting Application** is a prototype system designed to emulate Firebase's 
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/yourusername/voting-app.git
+    git clone https://github.com/joekusuma/dsci551-project.git
     cd voting-app
     ```
 
