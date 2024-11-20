@@ -28,11 +28,6 @@ The **Voting Application** is a prototype system designed to emulate Firebase's 
 - **HTML, CSS, JavaScript**
 - **Jinja2:** Templating engine for Flask
 
-### Other Tools
-
-- **Fusion 360:** 3D modeling (for related projects)
-- **Mailchimp:** Email marketing (for related projects)
-
 ## Installation
 
 ### Prerequisites
