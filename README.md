@@ -19,7 +19,6 @@ The **Voting Application** is a prototype system designed to emulate Firebase's 
 ### Backend
 
 - **Flask:** Web framework for Python
-- **WebSockets:** Real-time communication
 - **MongoDB:** NoSQL database
 - **PyMongo:** MongoDB driver for Python
 
